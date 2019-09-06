@@ -9,12 +9,14 @@ import javax.inject.Inject;
 @Plugin(id = "msgiveawaysvelocity", name = "MSGiveawaysVelocity", authors = "STG_Allen, LGC_McLovin")
 public class MSGiveawaysVelocity {
     public static ProxyServer server;
+    public static Logger logger;
 
     @Inject
     public MSGiveawaysVelocity(ProxyServer lserver){server = lserver;}
 
     @Inject
     public void onStart(CommandManager commandManager, Logger logger){
+        this.logger = logger;
         logger.info("[MSGiveaways] Initializing Plugin");
         commandManager.register(new SelectPlayer(), "msgive");
         logger.info("[MSGiveaways] Enabled commands.");

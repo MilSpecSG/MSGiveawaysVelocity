@@ -8,7 +8,6 @@ import net.kyori.text.format.TextDecoration;
 
 
 import javax.annotation.Nonnull;
-import javax.xml.soap.Text;
 import java.util.Random;
 
 public class SelectPlayer implements Command {
@@ -29,14 +28,33 @@ public class SelectPlayer implements Command {
                             randomPlayer = onlinePlayers[new Random().nextInt(MSGiveawaysVelocity.server.getAllPlayers().toArray().length)];
                         }
                     } else {
+
+                        TextComponent selected = TextComponent.builder()
+                                .content("[")
+                                .color(TextColor.GOLD)
+                                .append(TextComponent.of("|")
+                                        .decoration(TextDecoration.OBFUSCATED, true))
+                                .append(TextComponent.of("MSGiveaway")
+                                        .color(TextColor.DARK_AQUA))
+                                .append(TextComponent.of("|")
+                                        .color(TextColor.GOLD)
+                                        .decoration(TextDecoration.OBFUSCATED, true))
+                                .append(TextComponent.of("]")
+                                        .color(TextColor.GOLD))
+                                .append(TextComponent.of(randomPlayer.getUsername() + " has been selected!"))
+                                .build();
+
                         //Funky shit compared to sponge's methods (possibly fixed in the future???)
-                        MSGiveawaysVelocity.server.broadcast(TextComponent.of("[").color(TextColor.GOLD).append(TextComponent.of("|").decoration(TextDecoration.OBFUSCATED, true))
-                                .append(TextComponent.of("MSGiveaway").color(TextColor.DARK_AQUA)).append(TextComponent.of("|").color(TextColor.GOLD).decoration(TextDecoration.OBFUSCATED, true)).append(TextComponent.of("]")
-                                        .color(TextColor.GOLD)).append(TextComponent.of(randomPlayer.getUsername() + " has been selected!")));
+                        MSGiveawaysVelocity.server.broadcast(selected);
                     }
                  }
         }else{
-                source.sendMessage(TextComponent.of("Missing arguments!"));
+            for(Player p : MSGiveawaysVelocity.server.getAllPlayers()){
+                MSGiveawaysVelocity.logger.info(p.getUsername());
+            }
+                Player[] onlinePlayers = MSGiveawaysVelocity.server.getAllPlayers().toArray(new Player[MSGiveawaysVelocity.server.getPlayerCount()]);
+                Player randomPlayer = onlinePlayers[new Random().nextInt(MSGiveawaysVelocity.server.getPlayerCount())];
+
             }
     }
 
